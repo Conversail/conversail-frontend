@@ -1,2 +1,20 @@
+// Abstracts
+@use "./abstracts/variables/breakpoints";
+@use "./abstracts/functions/breakpointsFuncs";
+
+// Theme
+@use "./theme/tokens";
+@use "./theme/general";
+@use "./theme/components/headerTheme";
+
 // Base
 @use "./base/reset";
+
+// Components
+@use "../components/Header/header";
+@use "../components/ToggleThemeButton/toggleThemeButton";
+@use "../components/Button/button";
+@use "../components/Modal/modal";
+
+// Pages
+@use "../app/landing";

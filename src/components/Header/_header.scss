@@ -1,0 +1,40 @@
+@use "../../styles/abstracts/functions/breakpointsFuncs" as *;
+
+.c-header {
+  height: 64px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: var(--color-header-primary);
+  justify-content: space-between;
+  padding: 0 32px;
+
+  &--default {
+    background-color: red;
+  }
+
+  &--transparent {
+    background-color: transparent;
+  }
+
+  &__logo {
+    &__link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--color-header-primary);
+    }
+  }
+
+  &__svg {
+    height: 35px;
+    width: 35px;
+  }
+}
+
+@media only screen and (min-width: breakpoint(md)) {
+  .c-header {
+    height: 80px;
+  }
+}

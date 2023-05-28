@@ -1,0 +1,26 @@
+.c-button {
+  height: 48px;
+  border-radius: 24px;
+  font-weight: bold;
+  font-size: 1rem;
+  width: fit-content;
+  padding: 0 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--solid,
+  .c-button--primary {
+    border: none;
+    background-color: var(--blue-500);
+    color: var(--blue-100);
+  }
+
+  &--outline,
+  .c-button--neutral {
+    background: none;
+    border: solid var(--color-text) 2px;
+    color: var(--color-text);
+  }
+}

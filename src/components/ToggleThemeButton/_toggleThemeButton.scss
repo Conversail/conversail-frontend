@@ -1,0 +1,30 @@
+@use "../../styles/abstracts/functions/breakpointsFuncs" as *;
+
+.c-toggle-theme-btn {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  color: var(--color-header-primary);
+  gap: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__label {
+    display: none;
+  }
+
+  &__icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}
+
+@media only screen and (min-width: breakpoint(sm)) {
+  .c-toggle-theme-btn__label {
+    display: initial;
+    font-weight: bold;
+  }
+}

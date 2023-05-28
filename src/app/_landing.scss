@@ -1,0 +1,155 @@
+@use "../styles/abstracts/functions/breakpointsFuncs" as *;
+
+.p-landing {
+  display: grid;
+
+  &__main {
+    padding: 128px 32px 0 32px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 64px);
+    align-items: center;
+    gap: 64px;
+
+    .c-button {
+      width: 100%;
+    }
+  }
+
+  &__main-area {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  &__headline {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-text);
+
+    span {
+      color: var(--blue-500);
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  &__captain {
+    display: flex;
+    max-width: 400px;
+
+    &-drawing {
+      height: 200px;
+      width: fit-content;
+    }
+
+    &-hint {
+      background-color: var(--blue-500);
+      height: fit-content;
+      padding: 16px;
+      border-radius: 32px;
+      border-bottom-left-radius: 8px;
+      color: var(--blue-100);
+      font-weight: bold;
+      margin-left: -16px;
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(sm)) {
+  .p-landing {
+    &__buttons {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    &__headline {
+      font-size: 3rem;
+    }
+
+    &__captain {
+      max-width: 600px;
+
+      &-hint {
+        font-size: 1.5rem;
+        padding: 24px;
+        margin-left: -32px;
+      }
+
+      &-drawing {
+        height: 300px;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(md)) {
+  .p-landing {
+    &__main {
+      height: calc(100vh - 80px);
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 32px;
+    }
+
+    &__main-area {
+      margin-top: 20vh;
+      max-width: 500px;
+    }
+
+    &__captain {
+      margin-top: 20vh;
+    }
+
+    &__buttons {
+      justify-content: flex-start;
+
+      .c-button {
+        width: initial;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(lg)) {
+  .p-landing {
+    &__headline {
+      font-size: 4rem;
+    }
+
+    &__main-area {
+      max-width: 800px;
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(xl)) {
+  .p-landing {
+    &__main {
+      gap: 64px;
+    }
+
+    &__captain-drawing {
+      height: 400px;
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(xxl)) {
+  .p-landing {
+    &__captain {
+      max-width: 700px;
+
+      &-drawing {
+        height: 500px;
+      }
+    }
+  }
+}

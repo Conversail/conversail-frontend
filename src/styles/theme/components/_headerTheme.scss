@@ -1,0 +1,7 @@
+:root {
+  --color-header-primary: var(--blue-500);
+}
+
+[data-theme="dark"] {
+  --color-header-primary: var(--blue-100);
+}

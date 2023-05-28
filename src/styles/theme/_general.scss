@@ -1,0 +1,11 @@
+:root {
+  --color-background: var(--white);
+  --color-foreground: var(--white);
+  --color-text: var(--gray-900);
+}
+
+[data-theme="dark"] {
+  --color-background: var(--gray-900);
+  --color-foreground: var(--gray-700);
+  --color-text: var(--blue-100);
+}
