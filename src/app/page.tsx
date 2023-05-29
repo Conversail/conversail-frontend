@@ -1,23 +1,15 @@
 "use client";
 
-import {
-  Button,
-  Header,
-  Modal,
-  Preferences,
-  ToggleThemeButton,
-} from "../components";
+import { Button, Header, ToggleThemeButton } from "../components";
 import Image from "next/image";
 import captain from "../assets/captain/polygonal-captain.svg";
 import backgroundedCaptain from "../assets/captain/polygonal-captain--backgrounded.svg";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
-import { ModalHandlers } from "../components/Modal/Modal";
 
 export default function Landing() {
   const [currentCaptain, setCurrentCaptain] = useState();
   const { theme } = useTheme();
-  const modalRef = useRef<ModalHandlers>(null);
 
   useEffect(() => {
     setCurrentCaptain(theme === "dark" ? backgroundedCaptain : captain);
@@ -35,12 +27,6 @@ export default function Landing() {
           </h1>
           <div className="p-landing__buttons">
             <Button>Start chatting</Button>
-            <Button
-              appearance="outline"
-              onClick={() => modalRef.current?.open()}
-            >
-              Preferences
-            </Button>
           </div>
         </div>
         <div className="p-landing__captain">
@@ -56,12 +42,6 @@ export default function Landing() {
           </div>
         </div>
       </main>
-      <Modal
-        ref={modalRef}
-        title="Preferences"
-        content={<Preferences />}
-        submitLabel="Save"
-      />
     </div>
   );
 }
