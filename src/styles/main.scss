@@ -6,6 +6,7 @@
 @use "./theme/tokens";
 @use "./theme/general";
 @use "./theme/components/headerTheme";
+@use "./theme/pages/chatTheme";
 
 // Base
 @use "./base/reset";
@@ -15,6 +16,8 @@
 @use "../components/ToggleThemeButton/toggleThemeButton";
 @use "../components/Button/button";
 @use "../components/Modal/modal";
+@use "../components/Message/message";
 
 // Pages
 @use "../app/landing";
+@use "../app/chat/chat";

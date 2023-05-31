@@ -1,0 +1,9 @@
+:root {
+  --color-chat-messages-area: var(--white);
+  --color-chat-background: var(--gray-200);
+}
+
+[data-theme="dark"] {
+  --color-chat-messages-area: var(--gray-800);
+  --color-chat-background: var(--gray-900);
+}

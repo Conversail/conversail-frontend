@@ -5,7 +5,8 @@ import Image from "next/image";
 import captain from "../assets/captain/polygonal-captain.svg";
 import backgroundedCaptain from "../assets/captain/polygonal-captain--backgrounded.svg";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Landing() {
   const [currentCaptain, setCurrentCaptain] = useState();
@@ -17,7 +18,7 @@ export default function Landing() {
 
   return (
     <div className="p-landing">
-      <Header bgColor="transparent">
+      <Header bgColor="transparent" dropShadow={false}>
         <ToggleThemeButton />
       </Header>
       <main className="p-landing__main">
@@ -25,9 +26,11 @@ export default function Landing() {
           <h1 className="p-landing__headline">
             What do you want to <span>converse</span> about today?
           </h1>
-          <div className="p-landing__buttons">
-            <Button>Start chatting</Button>
-          </div>
+          <Link href={"/chat"} passHref style={{ textDecoration: "none" }}>
+            <div className="p-landing__buttons">
+              <Button>Start chatting</Button>
+            </div>
+          </Link>
         </div>
         <div className="p-landing__captain">
           <Image
