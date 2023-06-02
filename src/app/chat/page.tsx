@@ -9,6 +9,7 @@ import { BsBoxArrowLeft, BsPlug, BsSend } from "react-icons/bs";
 export default function Chat() {
   const [status, setStatus] = useState<"lazy" | "pairing" | "paired">("lazy");
   const [messages, setMessages] = useState<MessageType[]>([]);
+  const [chatEnded, setChatEnded] = useState<boolean>(false);
   const socket = useSocket(process.env.NEXT_PUBLIC_API_URL ?? "");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,7 +21,7 @@ export default function Chat() {
 
       socket.on("chat ended", () => {
         setStatus("lazy");
-        setMessages([]);
+        setChatEnded(true);
       });
 
       socket.on("message", ({ id, content, replyTo, sentAt, fromYourself }) => {
@@ -30,9 +31,11 @@ export default function Chat() {
         ]);
       });
     }
-  }, [socket, setStatus, messages, setMessages]);
+  }, [socket, setStatus, messages, setMessages, setChatEnded]);
 
   const handlePair = useCallback(() => {
+    setMessages([]);
+    setChatEnded(false);
     switch (status) {
       case "lazy":
         socket?.emit("pair");
@@ -49,7 +52,6 @@ export default function Chat() {
     if (!inputRef.current) return;
 
     const content = inputRef.current.value.trim();
-
     if (!content) return;
     const message: MessageType = {
       content,
@@ -77,35 +79,45 @@ export default function Chat() {
       <main className="p-chat__main">
         <div className="p-chat__chatting-area">
           <div className="p-chat__messages-area">
-            {status === "pairing" ? (
-              <span className="p-chat__pairing-indicator">Pairing</span>
-            ) : null}
-            {status === "paired" && messages.length === 0 ? (
-              <span>Paired</span>
-            ) : null}
+            <div className="p-chat__messages-area__warnings">
+              {status === "pairing" ? (
+                <span className="p-chat__pairing-indicator">Pairing</span>
+              ) : null}
+              {status === "paired" && messages.length === 0 ? (
+                <span>Paired</span>
+              ) : null}
+              {chatEnded ? <span>Chat ended</span> : null}
+            </div>
             {messages.map((message, i) => (
               <Message {...message} key={i} />
             ))}
           </div>
           <div className="p-chat__message-bar">
-            <button className="p-chat__bar-button" onClick={() => handlePair()}>
-              {status === "lazy" ? (
-                <BsPlug className="p-chat__bar-button__icon" />
-              ) : (
-                <BsBoxArrowLeft className="p-chat__bar-button__icon" />
-              )}
-            </button>
-            <input
-              placeholder="Message"
-              className="p-chat__message-input"
-              ref={inputRef}
-            />
-            <button className="p-chat__bar-button">
-              <BsSend
-                className="p-chat__bar-button__icon"
-                onClick={() => handleSendMessage()}
+            <form onSubmit={(e) => e.preventDefault()}>
+              <button
+                className="p-chat__bar-button"
+                onClick={() => handlePair()}
+                type="button"
+              >
+                {status === "lazy" ? (
+                  <BsPlug className="p-chat__bar-button__icon" />
+                ) : (
+                  <BsBoxArrowLeft className="p-chat__bar-button__icon" />
+                )}
+              </button>
+              <input
+                placeholder="Message"
+                className="p-chat__message-input"
+                ref={inputRef}
               />
-            </button>
+              <button
+                className="p-chat__bar-button"
+                onClick={() => handleSendMessage()}
+                type="submit"
+              >
+                <BsSend className="p-chat__bar-button__icon" />
+              </button>
+            </form>
           </div>
         </div>
       </main>

@@ -17,7 +17,7 @@
     background-color: var(--color-chat-messages-area);
     display: flex;
     flex-direction: column-reverse;
-    padding: 16px 8px;
+    padding: 16px;
     gap: 4px;
   }
 
@@ -40,7 +40,12 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
+
+    form {
+      display: flex;
+      width: 100%;
+      gap: 16px;
+    }
   }
 
   &__message-input {
@@ -49,7 +54,7 @@
     background-color: transparent;
     font-size: 1rem;
     flex: 1;
-
+    min-width: 0;
     color: var(--color-text);
   }
 
