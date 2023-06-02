@@ -19,6 +19,10 @@
     flex-direction: column-reverse;
     padding: 16px;
     gap: 4px;
+
+    &__warnings {
+      color: var(--color-text);
+    }
   }
 
   &__pairing-indicator {
