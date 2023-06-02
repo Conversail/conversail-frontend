@@ -74,6 +74,11 @@
 
     &:hover {
       cursor: pointer;
+      filter: brightness(85%);
+    }
+
+    &:active {
+      filter: brightness(75%);
     }
 
     &__icon {
