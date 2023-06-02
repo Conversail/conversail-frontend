@@ -34,13 +34,19 @@ function ThemeProvider({ children, theme }: PropsWithChildren & ProviderProps) {
     (t?: Theme) => {
       const newTheme = currentTheme === "dark" ? "light" : "dark";
       setCurrentTheme(t ?? newTheme);
-      if (document) document.cookie = `theme=${newTheme}`;
     },
     [setCurrentTheme, currentTheme]
   );
 
   useEffect(() => {
     document.documentElement.dataset.theme = currentTheme;
+    if (document) {
+      var now = new Date();
+      var time = now.getTime();
+      var expireTime = time + 1000 * 86400 * 100;
+      now.setTime(expireTime);
+      document.cookie = `theme=${currentTheme};expires=${now.toUTCString()}`;
+    }
   }, [currentTheme]);
 
   return (
