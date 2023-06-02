@@ -15,7 +15,7 @@ function useSocket(url: string) {
       if (socket) socket.disconnect();
     }
     return cleanup;
-  }, []);
+  }, [socket, url]);
 
   return socket;
 }

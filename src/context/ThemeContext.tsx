@@ -41,9 +41,9 @@ function ThemeProvider({ children, theme }: PropsWithChildren & ProviderProps) {
   useEffect(() => {
     document.documentElement.dataset.theme = currentTheme;
     if (document) {
-      var now = new Date();
-      var time = now.getTime();
-      var expireTime = time + 1000 * 86400 * 100;
+      const now = new Date();
+      const time = now.getTime();
+      const expireTime = time + 1000 * 86400 * 100;
       now.setTime(expireTime);
       document.cookie = `theme=${currentTheme};expires=${now.toUTCString()}`;
     }

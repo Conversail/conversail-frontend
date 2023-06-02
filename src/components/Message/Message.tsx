@@ -1,6 +1,6 @@
 import { MessageType } from "@/src/types/message";
 
-function Message({ id, content, replyTo, sentAt, fromYourself }: MessageType) {
+function Message({ content, sentAt, fromYourself }: MessageType) {
   return (
     <div
       className={`c-message ${fromYourself ? "c-message--from-yourself" : ""}`}

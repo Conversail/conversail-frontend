@@ -69,7 +69,7 @@ export default function Chat() {
     );
     setMessages([message, ...messages]);
     inputRef.current.value = "";
-  }, [inputRef.current, setMessages, messages]);
+  }, [inputRef, setMessages, messages, socket]);
 
   return (
     <div className="p-chat">
