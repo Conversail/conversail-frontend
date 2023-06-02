@@ -27,7 +27,7 @@ function Header({
             src={logo}
             alt="Conversail logo"
           />
-          <span>Conversail</span>
+          <span className="notranslate">Conversail</span>
         </Link>
       </div>
 

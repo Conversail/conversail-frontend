@@ -4,13 +4,15 @@ import { Button, Header, ToggleThemeButton } from "../components";
 import Image from "next/image";
 import captain from "../assets/captain/polygonal-captain.svg";
 import backgroundedCaptain from "../assets/captain/polygonal-captain--backgrounded.svg";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Landing() {
-  const [currentCaptain, setCurrentCaptain] = useState();
   const { theme } = useTheme();
+  const [currentCaptain, setCurrentCaptain] = useState(
+    theme === "dark" ? backgroundedCaptain : captain
+  );
 
   useEffect(() => {
     setCurrentCaptain(theme === "dark" ? backgroundedCaptain : captain);
@@ -35,7 +37,7 @@ export default function Landing() {
         <div className="p-landing__captain">
           <Image
             priority
-            src={currentCaptain ?? captain}
+            src={currentCaptain}
             alt="Captain"
             className="p-landing__captain-drawing"
           />

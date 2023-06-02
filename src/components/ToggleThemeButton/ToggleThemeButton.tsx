@@ -1,16 +1,13 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useTheme } from "@/src/context/ThemeContext";
 import { BsMoon, BsSun } from "react-icons/bs";
 
 function ToggleThemeButton() {
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="c-toggle-theme-btn"
-    >
+    <button onClick={() => toggleTheme()} className="c-toggle-theme-btn">
       {theme === "dark" ? (
         <>
           <BsSun className="c-toggle-theme-btn__icon" />
