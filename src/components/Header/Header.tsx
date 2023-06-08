@@ -5,11 +5,20 @@ import Link from "next/link";
 
 type Props = {
   bgColor?: "default" | "transparent";
+  dropShadow?: boolean;
 };
 
-function Header({ bgColor = "default", children }: Props & PropsWithChildren) {
+function Header({
+  bgColor = "default",
+  dropShadow = true,
+  children,
+}: Props & PropsWithChildren) {
   return (
-    <div className={`c-header c-header--${bgColor}`}>
+    <div
+      className={`c-header c-header--${bgColor} ${
+        dropShadow ? "" : "c-header--no-shadow"
+      }`}
+    >
       <div className="c-header__logo">
         <Link href="/" className="c-header__logo__link">
           <Image
@@ -18,7 +27,7 @@ function Header({ bgColor = "default", children }: Props & PropsWithChildren) {
             src={logo}
             alt="Conversail logo"
           />
-          <span>Conversail</span>
+          <span className="notranslate">Conversail</span>
         </Link>
       </div>
 

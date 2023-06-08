@@ -1,23 +1,18 @@
 "use client";
 
-import {
-  Button,
-  Header,
-  Modal,
-  Preferences,
-  ToggleThemeButton,
-} from "../components";
+import { Button, Header, ToggleThemeButton } from "../components";
 import Image from "next/image";
 import captain from "../assets/captain/polygonal-captain.svg";
 import backgroundedCaptain from "../assets/captain/polygonal-captain--backgrounded.svg";
-import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
-import { ModalHandlers } from "../components/Modal/Modal";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Landing() {
-  const [currentCaptain, setCurrentCaptain] = useState();
   const { theme } = useTheme();
-  const modalRef = useRef<ModalHandlers>(null);
+  const [currentCaptain, setCurrentCaptain] = useState(
+    theme === "dark" ? backgroundedCaptain : captain
+  );
 
   useEffect(() => {
     setCurrentCaptain(theme === "dark" ? backgroundedCaptain : captain);
@@ -25,7 +20,7 @@ export default function Landing() {
 
   return (
     <div className="p-landing">
-      <Header bgColor="transparent">
+      <Header bgColor="transparent" dropShadow={false}>
         <ToggleThemeButton />
       </Header>
       <main className="p-landing__main">
@@ -33,20 +28,16 @@ export default function Landing() {
           <h1 className="p-landing__headline">
             What do you want to <span>converse</span> about today?
           </h1>
-          <div className="p-landing__buttons">
-            <Button>Start chatting</Button>
-            <Button
-              appearance="outline"
-              onClick={() => modalRef.current?.open()}
-            >
-              Preferences
-            </Button>
-          </div>
+          <Link href={"/chat"} passHref style={{ textDecoration: "none" }}>
+            <div className="p-landing__buttons">
+              <Button>Start chatting</Button>
+            </div>
+          </Link>
         </div>
         <div className="p-landing__captain">
           <Image
             priority
-            src={currentCaptain ?? captain}
+            src={currentCaptain}
             alt="Captain"
             className="p-landing__captain-drawing"
           />
@@ -56,12 +47,6 @@ export default function Landing() {
           </div>
         </div>
       </main>
-      <Modal
-        ref={modalRef}
-        title="Preferences"
-        content={<Preferences />}
-        submitLabel="Save"
-      />
     </div>
   );
 }

@@ -1,0 +1,29 @@
+.c-message {
+  background-color: var(--gray-500);
+  width: fit-content;
+  max-width: 60%;
+  min-height: 56px;
+  padding: 8px 16px;
+  border-radius: 4px 16px 16px 4px;
+  color: var(--gray-100);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &--from-yourself {
+    background-color: var(--blue-500);
+    margin-left: auto;
+    border-radius: 16px 4px 4px 16px;
+    color: var(--blue-100);
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    align-self: flex-end;
+  }
+
+  p {
+    overflow-wrap: anywhere;
+    margin: 8px 0;
+  }
+}

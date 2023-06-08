@@ -1,4 +1,5 @@
-import { Providers } from "../components";
+import { cookies } from "next/dist/client/components/headers";
+import ThemeProvider from "../context/ThemeContext";
 import "../styles/main.scss";
 import { Inter } from "next/font/google";
 
@@ -14,10 +15,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = cookies();
+  const theme = cookieStore.get("theme")?.value ?? "light";
+
   return (
-    <html lang="en">
+    <html lang="en" data-theme={theme}>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>
     </html>
   );
