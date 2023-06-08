@@ -152,6 +152,7 @@ export default function Chat() {
                 ref={inputRef}
                 disabled={status !== "paired"}
                 onChange={(e) => handleInputChange(e)}
+                type="text"
               />
               {isUserTyping ? (
                 <button
