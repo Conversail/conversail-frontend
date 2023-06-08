@@ -22,10 +22,14 @@
 
     &__warnings {
       color: var(--color-text);
+      display: flex;
+      flex-direction: column;
+      margin-top: 8px;
+      gap: 8px;
     }
   }
 
-  &__pairing-indicator {
+  &__indicator-with-ellipsis {
     &::after {
       overflow: hidden;
       display: inline-block;
@@ -49,6 +53,7 @@
       display: flex;
       width: 100%;
       gap: 16px;
+      align-items: center;
     }
   }
 
@@ -86,6 +91,10 @@
       width: 24px;
       color: var(--blue-100);
     }
+  }
+
+  &__send-button {
+    animation: pop 80ms;
   }
 }
 
@@ -129,5 +138,16 @@
 @-webkit-keyframes ellipsis {
   to {
     width: 1.25em;
+  }
+}
+
+@keyframes pop {
+  from {
+    width: 0;
+    height: 0;
+  }
+  to {
+    height: 50px;
+    width: 50px;
   }
 }
