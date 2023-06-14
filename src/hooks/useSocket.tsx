@@ -6,7 +6,7 @@ function useSocket(url: string) {
 
   useEffect(() => {
     if (!socket) {
-      const socketIo = io(url);
+      const socketIo = io(url, { closeOnBeforeunload: false });
 
       setSocket(socketIo);
     }
