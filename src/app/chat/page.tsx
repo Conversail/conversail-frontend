@@ -11,10 +11,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { BsBoxArrowLeft, BsPlug, BsSend } from "react-icons/bs";
+import { BsBoxArrowLeft, BsCheckLg, BsPlug, BsSend } from "react-icons/bs";
 
 export default function Chat() {
   const [status, setStatus] = useState<"lazy" | "pairing" | "paired">("lazy");
+  const [aboutToCancel, setAboutToCancel] = useState<boolean>(false);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [chatEnded, setChatEnded] = useState<boolean>(false);
   const [isUserTyping, setIsUserTyping] = useState<boolean>(false);
@@ -48,22 +49,45 @@ export default function Chat() {
         setIsMateTyping(false);
       });
     }
-  }, [socket, setStatus, messages, setMessages, setChatEnded]);
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      const message = `You're ${status} now! Are you sure you want to leave?`;
+
+      e.returnValue = message;
+      return message;
+    };
+
+    if (status !== "lazy") {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    } else {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    }
+
+    const cleanup = () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+    return cleanup;
+  }, [socket, setStatus, messages, setMessages, setChatEnded, status]);
 
   const handlePair = useCallback(() => {
-    setMessages([]);
     setChatEnded(false);
     switch (status) {
       case "lazy":
+        setMessages([]);
         socket?.emit("pair");
         setStatus("pairing");
         break;
 
       default:
-        socket?.emit("cancel chatting");
-        setStatus("lazy");
+        if (aboutToCancel) {
+          socket?.emit("cancel chatting");
+          setStatus("lazy");
+          setAboutToCancel(false);
+        } else {
+          setAboutToCancel(true);
+        }
     }
-  }, [status, setStatus, socket]);
+  }, [status, setStatus, socket, aboutToCancel]);
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -109,9 +133,35 @@ export default function Chat() {
     [socket]
   );
 
+  const onBeforeExitPage = useCallback((): boolean => {
+    if (status !== "lazy") {
+      const result = confirm(
+        `You're ${status} now! Are you sure you want to leave?`
+      );
+
+      return result;
+    } else {
+      return true;
+    }
+  }, [status]);
+
+  const getConnectionButtonIcon = useCallback((): JSX.Element => {
+    switch (status) {
+      case "lazy":
+        return <BsPlug className="p-chat__bar-button__icon" />;
+
+      default:
+        if (aboutToCancel) {
+          return <BsCheckLg className="p-chat__bar-button__icon" />;
+        } else {
+          return <BsBoxArrowLeft className="p-chat__bar-button__icon" />;
+        }
+    }
+  }, [status, aboutToCancel]);
+
   return (
     <div className="p-chat">
-      <Header bgColor="default">
+      <Header bgColor="default" onBeforeExitPage={onBeforeExitPage}>
         <ToggleThemeButton />
       </Header>
       <main className="p-chat__main">
@@ -140,11 +190,7 @@ export default function Chat() {
                 onClick={() => handlePair()}
                 type="button"
               >
-                {status === "lazy" ? (
-                  <BsPlug className="p-chat__bar-button__icon" />
-                ) : (
-                  <BsBoxArrowLeft className="p-chat__bar-button__icon" />
-                )}
+                {getConnectionButtonIcon()}
               </button>
               <input
                 placeholder="Message"
