@@ -2,6 +2,7 @@ import { cookies } from "next/dist/client/components/headers";
 import ThemeProvider from "../context/ThemeContext";
 import "../styles/main.scss";
 import { Inter } from "next/font/google";
+import SocketProvider from "../context/SocketContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme={theme}>
       <body className={inter.className}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <SocketProvider>
+            {children}
+          </SocketProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

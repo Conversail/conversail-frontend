@@ -2,6 +2,6 @@ export type MessageType = {
   id?: string;
   content: string;
   replyTo: string;
-  sentAt: Date;
+  createdAt: Date;
   fromYourself: boolean;
 };

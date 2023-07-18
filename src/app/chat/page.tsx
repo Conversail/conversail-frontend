@@ -1,8 +1,9 @@
 "use client";
 
 import { Header, Message, ToggleThemeButton } from "@/src/components";
-import { useSocket } from "@/src/hooks/useSocket";
+import { useSocket } from "@/src/context/SocketContext";
 import { MessageType } from "@/src/types/message";
+import { EventsFromServer, EventsToServer } from "@/src/types";
 import {
   ChangeEvent,
   FormEvent,
@@ -20,32 +21,33 @@ export default function Chat() {
   const [chatEnded, setChatEnded] = useState<boolean>(false);
   const [isUserTyping, setIsUserTyping] = useState<boolean>(false);
   const [isMateTyping, setIsMateTyping] = useState<boolean>(false);
-  const socket = useSocket(process.env.NEXT_PUBLIC_API_URL ?? "");
+  const { socket } = useSocket();
   const inputRef = useRef<HTMLInputElement>(null);
+  
 
   useEffect(() => {
     if (socket) {
-      socket.on("paired", () => {
+      socket.on(EventsFromServer.paired, () => {
         setStatus("paired");
       });
 
-      socket.on("chat ended", () => {
+      socket.on(EventsFromServer.chatEnded, () => {
         setStatus("lazy");
         setChatEnded(true);
       });
 
-      socket.on("message", ({ id, content, replyTo, sentAt, fromYourself }) => {
+      socket.on(EventsFromServer.incomingMessage, ({ id, content, replyTo, createdAt, fromYourself }) => {
         setMessages([
-          { id, content, replyTo, sentAt: new Date(sentAt), fromYourself },
+          { id, content, replyTo, createdAt: new Date(createdAt), fromYourself },
           ...messages,
         ]);
       });
 
-      socket.on("typing", () => {
+      socket.on(EventsFromServer.startedTyping, () => {
         setIsMateTyping(true);
       });
 
-      socket.on("stop typing", () => {
+      socket.on(EventsFromServer.stoppedTyping, () => {
         setIsMateTyping(false);
       });
     }
@@ -69,18 +71,24 @@ export default function Chat() {
     return cleanup;
   }, [socket, setStatus, messages, setMessages, setChatEnded, status]);
 
+  useEffect(() => {
+    return () => {
+      socket?.emit(EventsToServer.cancelChatting)
+    }
+  }, [socket])
+
   const handlePair = useCallback(() => {
     setChatEnded(false);
     switch (status) {
       case "lazy":
         setMessages([]);
-        socket?.emit("pair");
+        socket?.emit(EventsToServer.startPairing);
         setStatus("pairing");
         break;
 
       default:
         if (aboutToCancel) {
-          socket?.emit("cancel chatting");
+          socket?.emit(EventsToServer.cancelChatting);
           setStatus("lazy");
           setAboutToCancel(false);
         } else {
@@ -100,21 +108,21 @@ export default function Chat() {
       if (!content) return;
       const message: MessageType = {
         content,
-        sentAt: new Date(),
+        createdAt: new Date(),
         fromYourself: true,
         replyTo: "0",
       };
 
       socket?.emit(
-        "message",
-        { content, sentAt: new Date() },
+        EventsToServer.sendMessage,
+        message,
         (response: string) => {
           message.id = response;
         }
       );
       setMessages([message, ...messages]);
       inputRef.current.value = "";
-      socket?.emit("stop typing");
+      socket?.emit(EventsToServer.stoppedTyping);
       setIsUserTyping(false);
     },
     [inputRef, setMessages, messages, socket, isUserTyping]
@@ -123,10 +131,10 @@ export default function Chat() {
   const handleInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.value.trim() === "") {
-        socket?.emit("stop typing");
+        socket?.emit(EventsToServer.stoppedTyping);
         setIsUserTyping(false);
       } else {
-        socket?.emit("typing");
+        socket?.emit(EventsToServer.startedTyping);
         setIsUserTyping(true);
       }
     },
