@@ -8,7 +8,7 @@
   color: var(--gray-100);
   display: flex;
   align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
 
   &--from-yourself {
     background-color: var(--blue-500);
@@ -20,6 +20,8 @@
   &__time {
     font-size: 0.75rem;
     align-self: flex-end;
+    margin-left: auto;
+    padding-left: 8px;
   }
 
   p {
