@@ -8,7 +8,7 @@ export enum EventsToServer {
   updateChatPreferences = "updateChatPreferences"
 }
 
-export enum EventsFromServer{
+export enum EventsFromServer {
   paired = "paired",
   chatEnded = "chatEnded",
   incomingMessage = "incomingMessage",

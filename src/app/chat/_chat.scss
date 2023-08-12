@@ -1,6 +1,29 @@
 @use "../../styles/abstracts/functions/breakpointsFuncs" as *;
 
 .p-chat {
+  &__report-user-btn {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-danger);
+    gap: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &__label {
+      font-weight: bold;
+      display: none;
+    }
+
+    &__icon {
+      height: 1.2rem;
+      width: 1.2rem;
+    }
+  }
+
   &__main {
     height: calc(100vh - 64px);
     height: calc(100dvh - 64px);
@@ -96,6 +119,24 @@
   &__send-button {
     animation: pop 80ms;
   }
+
+  &__report-modal-content {
+    &__warning {
+      color: var(--color-text-danger)
+    }
+
+    >form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+}
+
+@media only screen and (min-width: breakpoint(sm)) {
+  .p-chat__report-user-btn__label {
+    display: initial;
+  }
 }
 
 @media only screen and (min-width: breakpoint(md)) {
@@ -146,6 +187,7 @@
     width: 0;
     height: 0;
   }
+
   to {
     height: 50px;
     width: 50px;

@@ -66,6 +66,12 @@ video {
   text-size-adjust: none;
 }
 
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
 footer,
 header,
 nav,

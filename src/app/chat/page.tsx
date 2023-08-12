@@ -1,6 +1,6 @@
 "use client";
 
-import { Header, Message, ToggleThemeButton } from "@/src/components";
+import { Header, Message } from "@/src/components";
 import { useSocket } from "@/src/context/SocketContext";
 import { MessageType } from "@/src/types/message";
 import { EventsFromServer, EventsToServer } from "@/src/types";
@@ -12,18 +12,20 @@ import {
   useRef,
   useState,
 } from "react";
-import { BsBoxArrowLeft, BsCheckLg, BsPlug, BsSend } from "react-icons/bs";
+import { BsBoxArrowLeft, BsCheckLg, BsExclamationTriangle, BsPlug, BsSend } from "react-icons/bs";
+import { ModalHandlers } from "@/src/components/Modal/Modal";
+import { ReportUserModal } from "@/src/components/PageComponents";
 
 export default function Chat() {
+  const { socket } = useSocket();
   const [status, setStatus] = useState<"lazy" | "pairing" | "paired">("lazy");
   const [aboutToCancel, setAboutToCancel] = useState<boolean>(false);
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const [chatEnded, setChatEnded] = useState<boolean>(false);
   const [isUserTyping, setIsUserTyping] = useState<boolean>(false);
   const [isMateTyping, setIsMateTyping] = useState<boolean>(false);
-  const { socket } = useSocket();
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  
+  const reportUserModalRef = useRef<ModalHandlers>(null);
 
   useEffect(() => {
     if (socket) {
@@ -38,7 +40,13 @@ export default function Chat() {
 
       socket.on(EventsFromServer.incomingMessage, ({ id, content, replyTo, createdAt, fromYourself }) => {
         setMessages([
-          { id, content, replyTo, createdAt: new Date(createdAt), fromYourself },
+          {
+            id,
+            content,
+            replyTo,
+            createdAt: new Date(createdAt),
+            fromYourself
+          },
           ...messages,
         ]);
       });
@@ -73,9 +81,9 @@ export default function Chat() {
 
   useEffect(() => {
     return () => {
-      socket?.emit(EventsToServer.cancelChatting)
-    }
-  }, [socket])
+      socket?.emit(EventsToServer.cancelChatting);
+    };
+  }, [socket]);
 
   const handlePair = useCallback(() => {
     setChatEnded(false);
@@ -167,10 +175,17 @@ export default function Chat() {
     }
   }, [status, aboutToCancel]);
 
+  const handleReportUser = useCallback(() => {
+    reportUserModalRef.current?.open();
+  }, []);
+
   return (
     <div className="p-chat">
       <Header bgColor="default" onBeforeExitPage={onBeforeExitPage}>
-        <ToggleThemeButton />
+        <button className="p-chat__report-user-btn" onClick={() => handleReportUser()}>
+          <BsExclamationTriangle className="p-chat__report-user-btn__icon" />
+          <span className="p-chat__report-user-btn__label">Report user</span>
+        </button>
       </Header>
       <main className="p-chat__main">
         <div className="p-chat__chatting-area">
@@ -221,6 +236,7 @@ export default function Chat() {
           </div>
         </div>
       </main>
-    </div>
+      <ReportUserModal pairingStatus={status} ref={reportUserModalRef} />
+    </div >
   );
 }

@@ -1,0 +1,60 @@
+.c-select {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    display: none
+  }
+
+  &--collapsed {
+    .c-select__selected-option {
+      border-radius: 8px 8px 0 0;
+    }
+  }
+
+  &__label {
+    margin-bottom: 8px;
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  &__required-indicator {
+    color: var(--color-text-danger);
+  }
+
+  &__all-options-container {
+    position: relative;
+  }
+
+  &__selected-option {
+    border: 2px solid var(--color-text);
+    padding: 8px;
+    border-radius: 8px;
+    justify-content: space-between;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__options {
+    position: fixed;
+    top: 33px;
+    background-color: var(--color-foreground);
+    border: 2px solid var(--color-text);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__option {
+    padding: 8px;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--color-foreground-hover);
+    }
+  }
+}

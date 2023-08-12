@@ -17,6 +17,8 @@
 @use "../components/Button/button";
 @use "../components/Modal/modal";
 @use "../components/Message/message";
+@use "../components/Form/Select/select";
+@use "../components/Form/TextArea/textarea";
 
 // Pages
 @use "../app/landing";

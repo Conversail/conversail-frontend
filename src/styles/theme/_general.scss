@@ -1,11 +1,15 @@
 :root {
   --color-background: var(--white);
   --color-foreground: var(--white);
+  --color-foreground-hover: var(--gray-200);
   --color-text: var(--gray-900);
+  --color-text-danger: var(--red-500);
 }
 
 [data-theme="dark"] {
   --color-background: var(--gray-900);
   --color-foreground: var(--gray-700);
+  --color-foreground-hover: var(--gray-500);
   --color-text: var(--blue-100);
+  --color-text-danger: var(--red-400);
 }

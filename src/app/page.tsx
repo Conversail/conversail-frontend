@@ -40,6 +40,7 @@ export default function Landing() {
             src={currentCaptain}
             alt="Captain"
             className="p-landing__captain-drawing"
+            blurDataURL={currentCaptain}
           />
           <div className="p-landing__captain-hint">
             Don&#39;t forget to check out our rules to make this boat a better

@@ -4,6 +4,7 @@
   border-radius: 4px;
   width: 100%;
   max-width: 600px;
+  color: var(--color-text);
 
   &__background {
     position: absolute;
@@ -16,6 +17,7 @@
     justify-content: center;
     align-items: center;
     padding: 32px;
+    z-index: 32;
   }
 
   &__title {
@@ -26,6 +28,8 @@
 
   &__content {
     margin: 32px 0;
+    max-height: 400px;
+    overflow-y: auto;
   }
 
   &__footer {

@@ -3,7 +3,12 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
   ],
-  "rules": {}
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "semi": "warn"
+  }
 }

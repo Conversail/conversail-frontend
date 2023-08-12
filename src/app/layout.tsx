@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Conversail",
   description: "Let's talk!",
+  themeColor: "#2b6be2"
 };
 
 export default function RootLayout({
