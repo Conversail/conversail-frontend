@@ -1,0 +1,40 @@
+.c-preferences-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  &__options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__select-pairing-lang {
+    margin-left: 32px;
+    width: 200px;
+  }
+
+  &__receive-option {
+    margin-left: 32px;
+  }
+
+  &__option {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+  }
+
+  &__option-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__icon {
+    height: 24px;
+    width: 24px;
+    ;
+  }
+}

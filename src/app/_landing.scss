@@ -63,13 +63,22 @@
       margin-left: -16px;
     }
   }
+
+  &__preferences-modal {
+    width: fit-content;
+  }
 }
 
 @media only screen and (min-width: breakpoint(sm)) {
   .p-landing {
     &__buttons {
       flex-direction: row;
-      justify-content: center;
+
+      justify-content: flex-start;
+
+      .c-button {
+        width: initial;
+      }
     }
 
     &__headline {
@@ -88,6 +97,10 @@
       &-drawing {
         height: 300px;
       }
+    }
+
+    &__preferences-modal {
+      width: 400px;
     }
   }
 }

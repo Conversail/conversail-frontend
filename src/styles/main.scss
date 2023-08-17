@@ -19,6 +19,8 @@
 @use "../components/Message/message";
 @use "../components/Form/Select/select";
 @use "../components/Form/TextArea/textarea";
+@use "../components/PageComponents/Common/PreferencesMenu/preferencesMenu";
+@use "../components/Form/ToggleSwitch/toggleSwitch";
 
 // Pages
 @use "../app/landing";

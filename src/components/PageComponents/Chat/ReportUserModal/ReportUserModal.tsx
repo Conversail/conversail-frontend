@@ -1,8 +1,8 @@
 import { ForwardedRef, forwardRef, useCallback, useRef, useState } from "react";
-import { Form, Select, TextArea } from "../../Form";
-import { Modal } from "../../Modal";
-import { ModalHandlers } from "../../Modal/Modal";
-import { FormHandlers } from "../../Form/Form";
+import { Form, Select, TextArea } from "../../../Form";
+import { Modal } from "../../../Modal";
+import { ModalHandlers } from "../../../Modal/Modal";
+import { FormHandlers } from "../../../Form/Form";
 import { EventsToServer } from "@/src/types";
 import { useSocket } from "@/src/context/SocketContext";
 
@@ -43,7 +43,6 @@ function ReportUserModal({ pairingStatus }: Props, ref: ForwardedRef<ModalHandle
             name="reason"
             id="reason-select"
             label="Reason"
-            startUnselected
             handleChange={handleSelectReportReason}
             required
             options={

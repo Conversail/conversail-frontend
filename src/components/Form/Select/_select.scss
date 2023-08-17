@@ -40,13 +40,14 @@
 
   &__options {
     position: fixed;
-    top: 33px;
     background-color: var(--color-foreground);
     border: 2px solid var(--color-text);
     border-top: none;
     border-radius: 0 0 8px 8px;
-    width: 100%;
     overflow: hidden;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 24;
   }
 
   &__option {

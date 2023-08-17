@@ -12,13 +12,15 @@ import {
   useRef,
   useState,
 } from "react";
-import { BsBoxArrowLeft, BsCheckLg, BsExclamationTriangle, BsPlug, BsSend } from "react-icons/bs";
+import { BsBoxArrowLeft, BsCheckLg, BsExclamationTriangle, BsGear, BsPlug, BsSend, BsXLg } from "react-icons/bs";
 import { ModalHandlers } from "@/src/components/Modal/Modal";
-import { ReportUserModal } from "@/src/components/PageComponents";
+import { PreferencesMenu, ReportUserModal } from "@/src/components/PageComponents";
+import classNames from "classnames";
 
 export default function Chat() {
   const { socket } = useSocket();
   const [status, setStatus] = useState<"lazy" | "pairing" | "paired">("lazy");
+  const [isPrefMenuOpen, setIsPrefMenuOpen] = useState<boolean>(false);
   const [aboutToCancel, setAboutToCancel] = useState<boolean>(false);
   const [chatEnded, setChatEnded] = useState<boolean>(false);
   const [isUserTyping, setIsUserTyping] = useState<boolean>(false);
@@ -182,9 +184,13 @@ export default function Chat() {
   return (
     <div className="p-chat">
       <Header bgColor="default" onBeforeExitPage={onBeforeExitPage}>
-        <button className="p-chat__report-user-btn" onClick={() => handleReportUser()}>
-          <BsExclamationTriangle className="p-chat__report-user-btn__icon" />
-          <span className="p-chat__report-user-btn__label">Report user</span>
+        <button className={classNames("p-chat__header-btn", "p-chat__open-prefs-btn")} onClick={() => setIsPrefMenuOpen(true)}>
+          <BsGear className="p-chat__header-btn__icon" />
+          <span className="p-chat__header-btn__label">Preferences</span>
+        </button>
+        <button className={classNames("p-chat__header-btn", "p-chat__report-user-btn")} onClick={() => handleReportUser()}>
+          <BsExclamationTriangle className="p-chat__header-btn__icon" />
+          <span className="p-chat__header-btn__label">Report user</span>
         </button>
       </Header>
       <main className="p-chat__main">
@@ -234,6 +240,13 @@ export default function Chat() {
               ) : null}
             </form>
           </div>
+        </div>
+        <div className={classNames("p-chat__preferences-area", isPrefMenuOpen ? "p-chat__preferences-area--visible" : "")}>
+          <div className="p-chat__preferences-area__header">
+            <button className="p-chat__preferences-area__close-btn" onClick={() => setIsPrefMenuOpen(false)}><BsXLg /></button>
+            <h3>Preferences</h3>
+          </div>
+          <PreferencesMenu />
         </div>
       </main>
       <ReportUserModal pairingStatus={status} ref={reportUserModalRef} />

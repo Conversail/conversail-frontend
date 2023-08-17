@@ -1,3 +1,1 @@
-import ReportUserModal from "./ReportUserModal";
-
-export { ReportUserModal };
+export * from "./ReportUserModal";

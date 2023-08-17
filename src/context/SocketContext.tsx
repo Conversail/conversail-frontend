@@ -8,6 +8,8 @@ import {
   useState,
 } from "react";
 import { Socket, io } from "socket.io-client";
+import { EventsToServer } from "../types";
+import { getChattingSettings } from "../utils";
 
 type Props = {
   socket?: Socket;
@@ -28,6 +30,13 @@ function SocketProvider({ children }: PropsWithChildren) {
       const socketIo = io(process.env.NEXT_PUBLIC_API_URL ?? "", { closeOnBeforeunload: false, path: "/ws" });
 
       setSocket(socketIo);
+    } else {
+      socket.on("connect", () => {
+        setTimeout(() => {
+          socket.emit(EventsToServer.updateChatPreferences, getChattingSettings());
+        });
+      });
+
     }
 
     function cleanup() {

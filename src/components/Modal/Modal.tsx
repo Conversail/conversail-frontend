@@ -10,12 +10,15 @@ import {
   useState,
 } from "react";
 import { Button } from "../Button";
+import classNames from "classnames";
 
 type Props = {
   title: string;
   submitLabel?: string;
   cancelLabel?: string;
   onSubmit?: () => boolean;
+  className?: string;
+  noSubmit?: boolean;
 };
 
 export type ModalHandlers = {
@@ -28,7 +31,9 @@ function Modal({
   children,
   submitLabel = "Submit",
   cancelLabel = "Cancel",
+  className,
   onSubmit,
+  noSubmit
 }: Props & PropsWithChildren,
   ref: ForwardedRef<ModalHandlers>) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -55,16 +60,17 @@ function Modal({
     }
   }, [close, onSubmit]);
 
-  useImperativeHandle(ref, () => ({ open, close }));
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="c-modal__background" onClick={(e) => handleClickOutside(e)}>
-      <div className="c-modal">
-        <div className="c-modal__title">{title}</div>
-        <div className="c-modal__content">{children}</div>
-        <div className="c-modal__footer">
+  const getFooter = useCallback(() => {
+    return <div className="c-modal__footer">
+      {noSubmit ?
+        <Button
+          appearance="solid"
+          color="primary"
+          onClick={() => handleSubmit()}
+        >
+          Close
+        </Button> :
+        <>
           <Button appearance="outline" color="neutral" onClick={() => close()}>
             {cancelLabel}
           </Button>
@@ -75,7 +81,20 @@ function Modal({
           >
             {submitLabel}
           </Button>
-        </div>
+        </>}
+    </div>;
+  }, [noSubmit, cancelLabel, close, handleSubmit, submitLabel]);
+
+  useImperativeHandle(ref, () => ({ open, close }));
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="c-modal__background" onClick={(e) => handleClickOutside(e)}>
+      <div className={classNames("c-modal", className)}>
+        <div className="c-modal__title">{title}</div>
+        <div className="c-modal__content">{children}</div>
+        {getFooter()}
       </div>
     </div>
   );

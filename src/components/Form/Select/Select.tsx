@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import {
+import React, {
   ForwardedRef, InputHTMLAttributes, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState
 } from "react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
@@ -10,9 +10,9 @@ type SelectOption = {
 }
 
 type Props = {
-  options: SelectOption[]
-  startUnselected?: boolean
+  options: SelectOption[],
   label?: string,
+  initialValue?: string,
   handleChange?: (selectedOption: SelectOption) => void
 }
 
@@ -22,7 +22,7 @@ export type SelectHandlers = {
 
 function Select({
   options,
-  startUnselected,
+  initialValue,
   label,
   required,
   className,
@@ -30,16 +30,11 @@ function Select({
   ...props
 }: Props & InputHTMLAttributes<HTMLInputElement>,
   ref?: ForwardedRef<SelectHandlers>) {
-  const [selectedOption, setSelectedOption] = useState<SelectOption>();
+  const [selectedOption, setSelectedOption] = useState<SelectOption | undefined>();
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const selectedOptionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!startUnselected) {
-      setSelectedOption(options[0]);
-    }
-  }, [options, startUnselected]);
 
   const getSelectedOptionLabel = useCallback(() => {
     if (!selectedOption) return <span>Select an option</span>;
@@ -100,11 +95,27 @@ function Select({
 
   useImperativeHandle(ref, () => ({ getValue }));
 
+  useEffect(() => {
+    setSelectedOption(options.find(o => o.value === initialValue));
+
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsCollapsed(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [initialValue, setSelectedOption, options]);
+
   return (
     <div
       className={classNames(
-        `c-select`, `${isCollapsed ? "c-select--collapsed" : null}`, className
-      )}>
+        `c-select`, `${isCollapsed ? "c-select--collapsed" : ""}`, className
+      )}
+      ref={wrapperRef}
+    >
       {getLabel()}
       <div className="c-select__all-options-container">
         <div className="c-select__selected-option" onClick={() => setIsCollapsed(!isCollapsed)} ref={selectedOptionRef}>
@@ -115,7 +126,7 @@ function Select({
       </div>
       <input
         data-c-type="select"
-        data-start-unselected={startUnselected}
+        data-start-unselected={!initialValue}
         value={selectedOption?.value ?? ""}
         readOnly={true}
         required={required}

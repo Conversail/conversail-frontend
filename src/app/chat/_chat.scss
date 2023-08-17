@@ -1,12 +1,12 @@
 @use "../../styles/abstracts/functions/breakpointsFuncs" as *;
 
 .p-chat {
-  &__report-user-btn {
+  &__header-btn {
     background-color: transparent;
     border: none;
     display: flex;
     align-items: center;
-    color: var(--color-text-danger);
+
     gap: 8px;
 
     &:hover {
@@ -24,6 +24,14 @@
     }
   }
 
+  &__report-user-btn {
+    color: var(--color-text-danger);
+  }
+
+  &__open-prefs-btn {
+    color: var(--color-header-primary);
+  }
+
   &__main {
     height: calc(100vh - 64px);
     height: calc(100dvh - 64px);
@@ -32,6 +40,47 @@
 
   &__chatting-area {
     height: 100%;
+  }
+
+  &__preferences-area {
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    padding: 32px;
+    color: var(--color-text);
+    z-index: 32;
+    background-color: var(--color-chat-background);
+    display: none;
+
+    &--visible {
+      display: initial;
+    }
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 64px;
+    }
+
+    &__close-btn {
+      background: none;
+      border: none;
+      color: var(--color-text);
+      padding: 0;
+
+      &:hover {
+        cursor: pointer
+      }
+
+      >svg {
+        height: 24px;
+        width: 24px;
+      }
+    }
   }
 
   &__messages-area {
@@ -134,7 +183,7 @@
 }
 
 @media only screen and (min-width: breakpoint(sm)) {
-  .p-chat__report-user-btn__label {
+  .p-chat__header-btn__label {
     display: initial;
   }
 }
@@ -154,6 +203,23 @@
       height: calc(100vh - 80px);
       height: calc(100dvh - 80px);
       grid-area: center;
+    }
+
+    &__open-prefs-btn {
+      display: none;
+    }
+
+    &__preferences-area {
+      height: calc(100vh - 80px);
+      height: calc(100dvh - 80px);
+      grid-area: right;
+      position: initial;
+      width: initial;
+      display: initial;
+
+      &__close-btn {
+        display: none;
+      }
     }
   }
 }
