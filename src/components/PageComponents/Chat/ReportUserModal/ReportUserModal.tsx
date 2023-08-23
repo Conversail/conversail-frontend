@@ -1,19 +1,21 @@
 import { ForwardedRef, forwardRef, useCallback, useRef, useState } from "react";
+
+import { useSocket } from "@/src/context/SocketContext";
+import { EventsToServer } from "@/src/types";
+
 import { Form, Select, TextArea } from "../../../Form";
+import { FormHandlers } from "../../../Form/Form";
 import { Modal } from "../../../Modal";
 import { ModalHandlers } from "../../../Modal/Modal";
-import { FormHandlers } from "../../../Form/Form";
-import { EventsToServer } from "@/src/types";
-import { useSocket } from "@/src/context/SocketContext";
 
 type Props = {
   pairingStatus: "lazy" | "pairing" | "paired",
 }
 
 function ReportUserModal({ pairingStatus }: Props, ref: ForwardedRef<ModalHandlers>) {
+  const { socket } = useSocket();
   const [isOtherReasonSelected, setIsOtherReasonSelected] = useState<boolean>(false);
   const reportUserFormRef = useRef<FormHandlers>(null);
-  const { socket } = useSocket();
 
   const handleReportSubmit = useCallback((): boolean => {
     const values = reportUserFormRef.current?.submit();

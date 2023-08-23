@@ -1,25 +1,19 @@
 "use client";
 
-import { Button, Header, ToggleThemeButton } from "../components";
 import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useRef } from "react";
+
 import captain from "../assets/captain/polygonal-captain.svg";
 import backgroundedCaptain from "../assets/captain/polygonal-captain--backgrounded.svg";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { useTheme } from "../context/ThemeContext";
+import { Button, Header, ToggleThemeButton } from "../components";
 import Modal, { ModalHandlers } from "../components/Modal/Modal";
 import { PreferencesMenu } from "../components/PageComponents";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Landing() {
   const { theme } = useTheme();
-  const [currentCaptain, setCurrentCaptain] = useState(
-    theme === "dark" ? backgroundedCaptain : captain
-  );
   const modalRef = useRef<ModalHandlers>(null);
-
-  useEffect(() => {
-    setCurrentCaptain(theme === "dark" ? backgroundedCaptain : captain);
-  }, [theme]);
 
   const handleOpenPreferences = useCallback(() => {
     modalRef.current?.open();
@@ -45,10 +39,10 @@ export default function Landing() {
         <div className="p-landing__captain">
           <Image
             priority
-            src={currentCaptain}
+            src={theme === "dark" ? backgroundedCaptain : captain}
             alt="Captain"
             className="p-landing__captain-drawing"
-            blurDataURL={currentCaptain}
+            blurDataURL={theme === "dark" ? backgroundedCaptain : captain}
           />
           <div className="p-landing__captain-hint">
             Don&#39;t forget to check out our rules to make this boat a better

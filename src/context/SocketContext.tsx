@@ -1,13 +1,14 @@
 "use client";
 
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { Socket, io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
+
 import { EventsToServer } from "../types";
 import { getChattingSettings } from "../utils";
 

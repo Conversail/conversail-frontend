@@ -1,9 +1,6 @@
 "use client";
 
-import { Header, Message } from "@/src/components";
-import { useSocket } from "@/src/context/SocketContext";
-import { MessageType } from "@/src/types/message";
-import { EventsFromServer, EventsToServer } from "@/src/types";
+import classNames from "classnames";
 import {
   ChangeEvent,
   FormEvent,
@@ -13,19 +10,23 @@ import {
   useState,
 } from "react";
 import { BsBoxArrowLeft, BsCheckLg, BsExclamationTriangle, BsGear, BsPlug, BsSend, BsXLg } from "react-icons/bs";
+
+import { Header, Message } from "@/src/components";
 import { ModalHandlers } from "@/src/components/Modal/Modal";
 import { PreferencesMenu, ReportUserModal } from "@/src/components/PageComponents";
-import classNames from "classnames";
+import { useSocket } from "@/src/context/SocketContext";
+import { EventsFromServer, EventsToServer } from "@/src/types";
+import { MessageType } from "@/src/types/message";
 
 export default function Chat() {
   const { socket } = useSocket();
   const [status, setStatus] = useState<"lazy" | "pairing" | "paired">("lazy");
-  const [isPrefMenuOpen, setIsPrefMenuOpen] = useState<boolean>(false);
-  const [aboutToCancel, setAboutToCancel] = useState<boolean>(false);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [chatEnded, setChatEnded] = useState<boolean>(false);
+  const [aboutToCancel, setAboutToCancel] = useState<boolean>(false);
+  const [isPrefMenuOpen, setIsPrefMenuOpen] = useState<boolean>(false);
   const [isUserTyping, setIsUserTyping] = useState<boolean>(false);
   const [isMateTyping, setIsMateTyping] = useState<boolean>(false);
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const reportUserModalRef = useRef<ModalHandlers>(null);
 

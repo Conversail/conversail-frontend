@@ -1,8 +1,10 @@
-import { cookies } from "next/dist/client/components/headers";
-import ThemeProvider from "../context/ThemeContext";
 import "../styles/main.scss";
+
+import { cookies } from "next/dist/client/components/headers";
 import { Inter } from "next/font/google";
+
 import SocketProvider from "../context/SocketContext";
+import ThemeProvider from "../context/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 

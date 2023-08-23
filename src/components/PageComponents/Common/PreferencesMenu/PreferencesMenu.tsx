@@ -1,18 +1,20 @@
 "use client";
 
-import { BsChatText, BsImage, BsMic, BsMoon } from "react-icons/bs";
-import { Select, ToggleSwitch } from "../../../Form";
 import classNames from "classnames";
-import { useTheme } from "@/src/context/ThemeContext";
 import { useCallback, useEffect, useState } from "react";
+import { BsChatText, BsImage, BsMic, BsMoon } from "react-icons/bs";
+
 import { useSocket } from "@/src/context/SocketContext";
+import { useTheme } from "@/src/context/ThemeContext";
 import { ChattingSettings, EventsToServer } from "@/src/types";
-import languages from "../../../../static/languages.json";
 import { getChattingSettings } from "@/src/utils";
 
+import languages from "../../../../static/languages.json";
+import { Select, ToggleSwitch } from "../../../Form";
+
 function PreferencesMenu() {
-  const { toggleTheme, theme } = useTheme();
   const { socket } = useSocket();
+  const { toggleTheme, theme } = useTheme();
   const [chattingSettings, setChattingSettings] = useState<ChattingSettings>();
 
   const handleChange = useCallback((name: string, value: boolean | string) => {

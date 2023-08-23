@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import logo from "../../assets/logo/logo--transparent-bg.svg";
-import { PropsWithChildren, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { PropsWithChildren, useCallback } from "react";
+
+import logo from "../../assets/logo/logo--transparent-bg.svg";
 
 type Props = {
   bgColor?: "default" | "transparent";
@@ -37,9 +38,8 @@ function Header({
 
   return (
     <div
-      className={`c-header c-header--${bgColor} ${
-        dropShadow ? "" : "c-header--no-shadow"
-      }`}
+      className={`c-header c-header--${bgColor} ${dropShadow ? "" : "c-header--no-shadow"
+        }`}
     >
       <div className="c-header__logo">
         <Link
@@ -56,7 +56,6 @@ function Header({
           <span className="notranslate">Conversail</span>
         </Link>
       </div>
-
       <div className="c-header__children">{children}</div>
     </div>
   );

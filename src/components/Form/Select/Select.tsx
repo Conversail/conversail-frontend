@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, {
-  ForwardedRef, InputHTMLAttributes, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState
+  ForwardedRef, forwardRef, InputHTMLAttributes, useCallback, useEffect, useImperativeHandle, useRef, useState
 } from "react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
@@ -35,6 +35,20 @@ function Select({
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const selectedOptionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSelectedOption(options.find(o => o.value === initialValue));
+
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsCollapsed(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [initialValue, setSelectedOption, options]);
 
   const getSelectedOptionLabel = useCallback(() => {
     if (!selectedOption) return <span>Select an option</span>;
@@ -94,20 +108,6 @@ function Select({
   }, []);
 
   useImperativeHandle(ref, () => ({ getValue }));
-
-  useEffect(() => {
-    setSelectedOption(options.find(o => o.value === initialValue));
-
-    function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
-        setIsCollapsed(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [initialValue, setSelectedOption, options]);
 
   return (
     <div

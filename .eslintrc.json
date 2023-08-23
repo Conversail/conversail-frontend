@@ -1,5 +1,5 @@
 {
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
@@ -9,6 +9,8 @@
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "semi": "warn"
+    "semi": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
   }
 }

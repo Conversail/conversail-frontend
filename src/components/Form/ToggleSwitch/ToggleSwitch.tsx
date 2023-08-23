@@ -8,14 +8,14 @@ type Props = {
 function ToggleSwitch({ onChange, initialValue = false }: Props) {
   const [isToggled, setIsToggled] = useState<boolean>(initialValue);
 
+  useEffect(() => {
+    setIsToggled(initialValue);
+  }, [initialValue]);
+
   const handleChange = useCallback(() => {
     setIsToggled(!isToggled);
     onChange?.(!isToggled);
   }, [isToggled, onChange]);
-
-  useEffect(() => {
-    setIsToggled(initialValue);
-  }, [initialValue]);
 
   return (
     <label className="c-toggle-switch">
