@@ -36,6 +36,14 @@
     &:hover {
       cursor: pointer;
     }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 1.1rem;
+      width: calc(100% - 16px);
+    }
   }
 
   &__options {
