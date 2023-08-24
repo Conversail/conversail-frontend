@@ -28,7 +28,7 @@ function SocketProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!socket) {
-      const socketIo = io(process.env.NEXT_PUBLIC_API_URL ?? "", { closeOnBeforeunload: false, path: "/ws" });
+      const socketIo = io(process.env.NEXT_PUBLIC_API_URL ?? "", { closeOnBeforeunload: false, path: "/ws", query: getChattingSettings() });
 
       setSocket(socketIo);
     } else {
