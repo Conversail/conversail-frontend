@@ -74,7 +74,7 @@ function Select({
 
     if (!rect) return null;
 
-    const top = rect.y + rect.height;
+    const top = rect.y + rect.height + 4;
     const left = rect.x;
     const width = rect.width;
 

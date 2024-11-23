@@ -6,12 +6,6 @@
     display: none
   }
 
-  &--collapsed {
-    .c-select__selected-option {
-      border-radius: 8px 8px 0 0;
-    }
-  }
-
   &__label {
     margin-bottom: 8px;
     display: flex;
@@ -27,10 +21,13 @@
   }
 
   &__selected-option {
-    border: 2px solid var(--color-text);
-    padding: 8px;
+    height: 48px;
+    border: 1px solid var(--color-form-comp-border);
+    background-color: var(--color-form-comp-bgcolor);
+    padding: 0 16px;
     border-radius: 8px;
     justify-content: space-between;
+    align-items: center;
     display: flex;
 
     &:hover {
@@ -48,18 +45,19 @@
 
   &__options {
     position: fixed;
-    background-color: var(--color-foreground);
-    border: 2px solid var(--color-text);
-    border-top: none;
-    border-radius: 0 0 8px 8px;
+    background-color: var(--color-select-options-bgcolor);
+    border-radius: 8px;
+    border: 1px solid var(--color-select-options-border);
     overflow: hidden;
     max-height: 200px;
     overflow-y: auto;
     z-index: 24;
+    padding: 8px 0;
+    filter: drop-shadow(rgba(0, 0, 0, 0.5) 0 0 8px);
   }
 
   &__option {
-    padding: 8px;
+    padding: 8px 16px;
 
     &:hover {
       cursor: pointer;

@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --color-background: var(--white);
   --color-foreground: var(--white);
   --color-foreground-hover: var(--gray-200);
@@ -7,6 +8,7 @@
 }
 
 [data-theme="dark"] {
+  color-scheme: dark;
   --color-background: var(--gray-900);
   --color-foreground: var(--gray-700);
   --color-foreground-hover: var(--gray-500);

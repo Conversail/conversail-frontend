@@ -1,0 +1,13 @@
+:root {
+  --color-form-comp-border: var(--gray-400);
+  --color-form-comp-bgcolor: var(--gray-100);
+  --color-select-options-bgcolor: var(--white);
+  --color-select-options-border: transparent;
+}
+
+[data-theme="dark"] {
+  --color-form-comp-border: var(--gray-500);
+  --color-form-comp-bgcolor: var(--gray-800);
+  --color-select-options-bgcolor: var(--gray-700);
+  --color-select-options-border: var(--gray-600);
+}
